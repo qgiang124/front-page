@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, defineProps, ref } from 'vue';
-import ShoppingCart from './ShoppingCart.vue';
+import { computed, defineProps, ref } from "vue";
+import ShoppingCart from "./ShoppingCart.vue";
+import UserInfo from "./UserInfo.vue";
 import {
   NGrid,
   NGridItem,
@@ -9,8 +10,8 @@ import {
   NButton,
   NModal,
   NCard,
-  NDropdown
-} from 'naive-ui';
+  NDropdown,
+} from "naive-ui";
 const openModal = ref(false);
 const openShoppingCart = ref(false);
 const openCheckoutModal = ref(false);
@@ -31,43 +32,43 @@ interface ProductItem {
 }
 
 const itemsInCart = ref<CartItem[]>([
-  { id: 1, name: 'rose', price: 12, quantity: 2 },
-  { id: 2, name: 'tulip', price: 15, quantity: 3 }
+  { id: 1, name: "rose", price: 12, quantity: 2 },
+  { id: 2, name: "tulip", price: 15, quantity: 3 },
 ]);
 
 const categories = ref([
-  { label: 'A', key: 'A' },
-  { label: 'B', key: 'B' },
-  { label: 'C', key: 'C' },
-  { label: 'Clear filter', key: '' }
+  { label: "A", key: "A" },
+  { label: "B", key: "B" },
+  { label: "C", key: "C" },
+  { label: "Clear filter", key: "" },
 ]);
 
-const filterKey = ref('');
+const filterKey = ref("");
 const items = ref<ProductItem[]>([
   {
     id: 1,
-    name: 'rose',
+    name: "rose",
     price: 12,
     imageUrl:
-      'https://images.unsplash.com/photo-1532713031318-db2d14e4b3e1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cm9zZSUyMGZsb3JhbCUyMHNob3B8ZW58MHx8MHx8fDA=',
-    category: 'A'
+      "https://images.unsplash.com/photo-1532713031318-db2d14e4b3e1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cm9zZSUyMGZsb3JhbCUyMHNob3B8ZW58MHx8MHx8fDA=",
+    category: "A",
   },
   {
     id: 2,
-    name: 'tulip',
+    name: "tulip",
     price: 15,
     imageUrl:
-      'https://images.unsplash.com/photo-1522431745718-cd31223a468d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVsaXAlMjBmbG9yYWwlMjBzaG9wfGVufDB8fDB8fHww',
-    category: 'B'
+      "https://images.unsplash.com/photo-1522431745718-cd31223a468d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVsaXAlMjBmbG9yYWwlMjBzaG9wfGVufDB8fDB8fHww",
+    category: "B",
   },
   {
     id: 3,
-    name: 'sunflower',
+    name: "sunflower",
     price: 10,
     imageUrl:
-      'https://images.unsplash.com/photo-1542801204-141ec23989d7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHN1bmZsb3dlciUyMGJvcXVldHxlbnwwfHwwfHx8MA==',
-    category: 'A'
-  }
+      "https://images.unsplash.com/photo-1542801204-141ec23989d7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHN1bmZsb3dlciUyMGJvcXVldHxlbnwwfHwwfHx8MA==",
+    category: "A",
+  },
 ]);
 
 const handleDecreaseQuant = (itemId: number) => {
@@ -84,20 +85,20 @@ const handleIncreaseQuant = (itemId: number) => {
   }
 };
 const newItem = ref({
-  name: '',
+  name: "",
   price: 0,
-  imageUrl: 'no image',
-  category: 'unknown'
+  imageUrl: "no image",
+  category: "unknown",
 });
 
 function addItem() {
-  console.log('Adding item');
+  console.log("Adding item");
   items.value.push({
     id: items.value.length + 1,
     name: newItem.value.name,
     price: newItem.value.price,
     imageUrl: newItem.value.imageUrl,
-    category: newItem.value.category
+    category: newItem.value.category,
   });
 }
 
@@ -111,7 +112,7 @@ const updatePrice = () => {
 };
 
 function deleteItem(itemId: number) {
-  console.log('Deleting item');
+  console.log("Deleting item");
   items.value = items.value.filter((item) => item.id !== itemId);
 }
 
@@ -134,22 +135,22 @@ const handleAddToCart = (item: ProductItem) => {
       id: items.value.length + 1,
       name: item.name,
       price: item.price,
-      quantity: 1
+      quantity: 1,
     });
   }
-  alert('Added to the shopping cart!');
+  alert("Added to the shopping cart!");
 };
 
 const selectedItem = ref<ProductItem>({
-  name: '',
+  name: "",
   price: 0,
-  imageUrl: '',
-  category: '',
-  id: -1
+  imageUrl: "",
+  category: "",
+  id: -1,
 });
 
 const filteredItems = computed(() => {
-  if (filterKey.value == '') return items.value;
+  if (filterKey.value == "") return items.value;
   else return items.value.filter((item) => item.category === filterKey.value);
 });
 
